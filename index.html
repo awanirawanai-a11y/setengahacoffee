@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>1/2 A Coffee - Menu</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap');
+
+:root{
+--bg:#0a0a0a;--text:#f5f5f0;--text-muted:#a0a0a0;
+--gold:#c9a96e;--border:#2a2a2a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;}
+
+/* HEADER */
+.header{display:flex;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg);}
+.logo{width:56px;height:56px;border-radius:50%;flex-shrink:0;margin-right:14px;overflow:hidden;background:#fff;border:1px solid var(--gold);}
+.logo img{width:100%;height:100%;object-fit:contain;display:block;}
+.header-text h1{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text);margin-bottom:2px;}
+.header-text p{font-size:.7rem;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* HERO */
+.hero{text-align:center;padding:40px 20px 30px;}
+.hero-tagline{font-size:.75rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--text);margin-bottom:8px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-menu{font-size:1.5rem;letter-spacing:8px;color:var(--text-muted);margin:20px 0;display:flex;align-items:center;justify-content:center;gap:16px;}
+.hero-menu::before,.hero-menu::after{content:'';width:40px;height:1px;background:var(--gold);}
+.hero-desc{font-size:.95rem;color:var(--text-muted);max-width:400px;margin:0 auto;line-height:1.7;}
+
+/* CATEGORY */
+.category{padding:30px 20px 10px;}
+.category-header{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;}
+.category-number{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-style:italic;font-weight:400;}
+.category-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--text);text-transform:uppercase;letter-spacing:1px;}
+.category-subtitle{font-size:.9rem;color:var(--text-muted);margin-bottom:20px;padding-left:50px;}
+.divider{height:1px;background:var(--border);margin:0 20px;}
+
+/* MENU ITEM */
+.menu-item{padding:20px;cursor:pointer;transition:background .2s;}
+.menu-item:active{background:rgba(255,255,255,0.03);}
+.menu-row{display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.menu-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);flex:1;}
+.menu-arrow{color:var(--gold);font-size:1.2rem;margin-left:8px;opacity:.5;}
+.menu-price{text-align:right;flex-shrink:0;}
+.price-text{font-family:'Playfair Display',serif;font-size:1rem;color:var(--text-muted);white-space:nowrap;}
+.price-hot-ice{font-size:.85rem;color:var(--text-muted);white-space:nowrap;}
+.price-hot-ice strong{color:var(--text);font-family:'Playfair Display',serif;font-size:1rem;}
+
+/* BADGE */
+.badge-best{display:inline-block;background:var(--gold);color:var(--bg);padding:3px 10px;border-radius:3px;font-size:.65rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:8px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:1000;padding:20px;backdrop-filter:blur(4px);}
+.modal-overlay.active{display:flex;}
+.modal-content{background:#151515;border:1px solid var(--gold);border-radius:12px;padding:30px 24px;max-width:400px;width:100%;text-align:center;position:relative;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;line-height:1;}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:16px;}
+.modal-desc{font-size:1rem;color:var(--text);line-height:1.7;}
+.modal-hint{font-size:.75rem;color:var(--text-muted);margin-top:20px;font-style:italic;}
+
+/* FOOTER */
+.footer{text-align:center;padding:40px 20px;border-top:1px solid var(--border);margin-top:30px;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:8px;}
+.footer p{font-size:.8rem;color:var(--text-muted);line-height:1.6;}
+
+@media(max-width:480px){
+.hero-title{font-size:2.2rem;}
+.category-title{font-size:1.5rem;}
+.menu-name{font-size:1.1rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<div class="logo">
+    <img src="logo.png" alt="Logo 1/2 A Coffee" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-family:Playfair Display,serif;font-weight:800;font-size:14px;color:#000;\'>1/2 A</div>'">
+</div>
+<div class="header-text">
+<h1>1/2 A Coffee</h1>
+<p>Melikan, Bantul • Menu & Modal</p>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-tagline">Sejak Setengah Abad Rasa</div>
+<div class="hero-title">1/2 A <em>Coffee</em></div>
+<div class="hero-menu">MENU</div>
+<div class="hero-desc">Kopi yang jujur, suasana yang hangat. Diseduh dengan tenang, disajikan dengan cerita.</div>
+</div>
+
+<!-- 01 BLACK COFFEE -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">01</span>
+<span class="category-title">Black Coffee</span>
+</div>
+<div class="category-subtitle">Teman harian, harga bersahabat</div>
+</div>
+
+<div class="menu-item" data-name="Espresso">
+<div class="menu-row">
+<div class="menu-name">Espresso</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Americano">
+<div class="menu-row">
+<div class="menu-name">Americano</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Red Eyed">
+<div class="menu-row">
+<div class="menu-name">Red Eyed</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Long Black">
+<div class="menu-row">
+<div class="menu-name">Long Black</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Tubruk">
+<div class="menu-row">
+<div class="menu-name">Tubruk</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="V60">
+<div class="menu-row">
+<div class="menu-name">V60</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 02 WHITE COFFEE -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">02</span>
+<span class="category-title">White Coffee</span>
+</div>
+<div class="category-subtitle">Resep timeless, rasa yang familiar</div>
+</div>
+
+<div class="menu-item" data-name="Cappuccino">
+<div class="menu-row">
+<div class="menu-name">Cappuccino</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Coffee Latte">
+<div class="menu-row">
+<div class="menu-name">Coffee Latte</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+<span class="badge-best">Best Seller</span>
+</div>
+
+<div class="menu-item" data-name="Flavoured Latte">
+<div class="menu-row">
+<div class="menu-name">Flavoured Latte</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Coffee Mocca">
+<div class="menu-row">
+<div class="menu-name">Coffee Mocca</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 03 MILK BASED -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">03</span>
+<span class="category-title">Milk Based</span>
+</div>
+<div class="category-subtitle">Non-coffee, tetap nikmat</div>
+</div>
+
+<div class="menu-item" data-name="Matcha Latte">
+<div class="menu-row">
+<div class="menu-name">Matcha Latte</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Chocolate">
+<div class="menu-row">
+<div class="menu-name">Chocolate</div>
+<div class="menu-price"><div class="price-hot-ice">HOT <strong>Rp. ???</strong> / ICED <strong>Rp. ???</strong></div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 04 TEA BASED -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">04</span>
+<span class="category-title">Tea Based</span>
+</div>
+<div class="category-subtitle">Segar dan menyegarkan</div>
+</div>
+
+<div class="menu-item" data-name="Lemon Tea">
+<div class="menu-row">
+<div class="menu-name">Lemon Tea</div>
+<div class="menu-price"><div class="price-text">ICED Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Lychee Tea">
+<div class="menu-row">
+<div class="menu-name">Lychee Tea</div>
+<div class="menu-price"><div class="price-text">ICED Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 05 SNACK -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">05</span>
+<span class="category-title">Snack</span>
+</div>
+<div class="category-subtitle">Camilan untuk menemani ngopi</div>
+</div>
+
+<div class="menu-item" data-name="Mix Platter">
+<div class="menu-row">
+<div class="menu-name">Mix Platter</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Platter Jowo">
+<div class="menu-row">
+<div class="menu-name">Platter Jowo</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 06 MAKANAN -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">06</span>
+<span class="category-title">Makanan</span>
+</div>
+<div class="category-subtitle">Porsi kenyang, rasa mantap</div>
+</div>
+
+<div class="menu-item" data-name="Mi Goreng Spesial">
+<div class="menu-row">
+<div class="menu-name">Mi Goreng Spesial</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="menu-item" data-name="Burger">
+<div class="menu-row">
+<div class="menu-name">Burger</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 07 PAKET -->
+<div class="category">
+<div class="category-header">
+<span class="category-number">07</span>
+<span class="category-title">Paket Hemat</span>
+</div>
+<div class="category-subtitle">Lebih hemat, lebih nikmat</div>
+</div>
+
+<div class="menu-item" data-name="Paket Nongkrong 1/2">
+<div class="menu-row">
+<div class="menu-name">Paket Nongkrong 1/2</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+<span class="badge-best">Best Value</span>
+</div>
+
+<div class="menu-item" data-name="Paket Healthy">
+<div class="menu-row">
+<div class="menu-name">Paket Healthy</div>
+<div class="menu-price"><div class="price-text">Rp. ???</div></div>
+<div class="menu-arrow">›</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<div class="footer-logo">1/2 A Coffee</div>
+<p>Melikan, Bantul</p>
+<p style="margin-top:10px;font-size:.7rem;">© 2026 — Half a century of flavor</p>
+</div>
+
+<!-- MODAL POPUP -->
+<div class="modal-overlay" id="menuModal">
+<div class="modal-content">
+<button class="modal-close" id="closeModal">&times;</button>
+<div class="modal-title" id="modalTitle">Nama Menu</div>
+<div class="modal-desc" id="modalDesc">Deskripsi menu akan muncul di sini.</div>
+<div class="modal-hint">Tap di luar kotak untuk menutup</div>
+</div>
+</div>
+
+<script>
+const menuDetails = {
+"Espresso": "Shot kopi murni, bold & intense. Dasar dari semua kopi favoritmu.",
+"Americano": "Espresso dengan air panas/dingin. Clean, ringan, dan pas untuk ngopi santai.",
+"Red Eyed": "Kopi seduh + shot espresso. Double caffeine buat yang butuh melek maksimal. ☕⚡",
+"Long Black": "Double shot espresso di atas air. Lebih kuat dari Americano, aroma lebih terjaga.",
+"Tubruk": "Kopi tradisional Indonesia. Diseruput pelan, dinikmati sampai tetes terakhir.",
+"V60": "Pour-over manual. Rasa kopi lebih bersih, kompleks, dan penuh karakter. 🎯",
+"Cappuccino": "Espresso, susu steamed, dan foam lembut. Klasik Italia yang tak pernah salah.",
+"Coffee Latte": "Espresso dengan susu creamy. Smooth, lembut, dan friendly untuk semua lidah.",
+"Flavoured Latte": "Latte dengan sentuhan sirup pilihan — vanilla, caramel, hazelnut, dan lainnya. 🍯",
+"Coffee Mocca": "Perkawinan sempurna espresso dan coklat. Manis, pahit, dan bikin nagih. 🍫",
+"Matcha Latte": "Bubuk matcha premium dengan susu. Earthy, creamy, dan penuh antioksidan. 🍵",
+"Chocolate": "Coklat kental yang rich & comforting. Favorit anak-anak hingga dewasa. 🍫",
+"Lemon Tea": "Teh segar dengan perasan lemon asli. Refreshing & menyegarkan tenggorokan. 🍋",
+"Lychee Tea": "Teh dengan sirup leci yang wangi & manis. Tropical vibes dalam satu gelas. 🌸",
+"Mix Platter": "Sosis, kentang goreng, dan nugget. Cocok buat sharing bareng teman! 🍟",
+"Platter Jowo": "Pisang goreng, telo, dan mendoan. Camilan tradisional dengan cita rasa lokal. 🍌",
+"Mi Goreng Spesial": "Mi goreng dengan telur, ayam suwir, dan sayuran. Porsi kenyang, rasa mantap! 🍜",
+"Burger": "Roti bun lembut, patty juicy, sayur segar, dan saus spesial. Simple tapi satisfying. 🍔",
+"Paket Nongkrong 1/2": "2 Americano + Platter Jowo. Paket sempurna buat nongkrong sore bareng bestie! ☕🍌",
+"Paket Healthy": "Matcha + Chocolate + Platter Jowo. Untuk yang mau sehat tapi tetap nikmat. 🍵🍫"
+};
+
+const modal = document.getElementById('menuModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const closeModal = document.getElementById('closeModal');
+
+document.querySelectorAll('.menu-item').forEach(item => {
+item.addEventListener('click', () => {
+const name = item.getAttribute('data-name');
+if(menuDetails[name]) {
+modalTitle.textContent = name;
+modalDesc.textContent = menuDetails[name];
+modal.classList.add('active');
+}
+});
+});
+
+closeModal.addEventListener('click', () => modal.classList.remove('active'));
+modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+</script>
+
+</body>
+</html>
